@@ -19,7 +19,12 @@
         "xhdpi": "./assets/images/splash.png",
         "xxhdpi": "./assets/images/splash.png",
         "xxxhdpi": "./assets/images/splash.png",
-        "resizeMode": "cover"
+        "resizeMode": "cover",
+        "softwareKeyboardLayoutMode": "pan",
+      "navigationBar": {
+        "backgroundColor": "#ffffff",
+        "visible": "sticky-immersive"
+      }
       },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
