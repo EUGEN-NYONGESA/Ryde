@@ -8,6 +8,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import "./../global.css";
 
+import { ClerkProvider } from '@clerk/clerk-expo'
+import { Slot } from 'expo-router'
+import { tokenCache } from '@clerk/clerk-expo/token-cache';
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
+
+
+
 // Prevent auto-hiding the splash screen
 SplashScreen.preventAutoHideAsync();
 
@@ -22,6 +29,12 @@ export default function RootLayout() {
     "Jakarta-SemiBold": require("../assets/fonts/PlusJakartaSans-SemiBold.ttf"),
   });
 
+  if (!publishableKey) {
+  throw new Error(
+    'Add EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env',
+  )
+}
+
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
@@ -33,22 +46,24 @@ export default function RootLayout() {
   }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="auto" translucent backgroundColor="transparent" />
-      <Stack
-        screenOptions={{
-          contentStyle: {
-            backgroundColor: '#ffffff', // Your app's background color
-            flex: 1
-          }
-        }}
-      >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="(root)" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </SafeAreaProvider>
+    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+      <SafeAreaProvider>
+        <StatusBar style="auto" translucent backgroundColor="transparent" />
+          <Stack
+            screenOptions={{
+              contentStyle: {
+                backgroundColor: '#ffffff', // Your app's background color
+                flex: 1
+              }
+            }}
+          >
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          <Stack.Screen name="(root)" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        </SafeAreaProvider>
+      </ClerkProvider>
   );
 }

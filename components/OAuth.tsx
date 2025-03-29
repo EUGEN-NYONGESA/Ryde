@@ -18,7 +18,7 @@ const OAuth = ({ isSignUp }) => {
             color: "#6B7280",
           }}
         >
-          Or
+          or
         </Text>
         <View style={{ flex: 1, height: 1, backgroundColor: "#D1D5DB" }} />
       </View>

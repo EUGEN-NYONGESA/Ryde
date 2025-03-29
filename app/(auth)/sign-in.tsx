@@ -3,16 +3,39 @@ import React, { useState } from "react";
 import { icons, images } from "@/constants";
 import InputField from "@/components/InputField";
 import CustomButton from "@/components/customButton";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import OAuth from "@/components/OAuth";
+import { useSignIn } from "@clerk/clerk-expo";
 
 const SignIn = () => {
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const router = useRouter();
+
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const onSignInPress = async () => {};
+   const onSignInPress = async () => {
+    if (!isLoaded) return
+
+    // Start the sign-in process using the email and password provided
+    try {
+      const signInAttempt = await signIn.create({
+        identifier: form.email,
+        password: form.password
+      });
+
+      if (signInAttempt.status === 'complete') {
+        await setActive({ session: signInAttempt.createdSessionId })
+        router.replace('/')
+      } else {
+        console.error(JSON.stringify(signInAttempt, null, 2))
+      }
+    } catch (err) {
+      console.error(JSON.stringify(err, null, 2))
+    }
+  }
 
   return (
     <ScrollView
@@ -59,8 +82,8 @@ const SignIn = () => {
 
         {/* Sign Up Link */}
         <Link href="/(auth)/sign-up" asChild>
-          <Text className="text-lg text-center text-general-200 mt-3">
-            <Text className="font-JakartaBold">Need an account? </Text>
+          <Text className="text-lg text-center text-general-200 mt-5">
+            <Text className="font-JakartaBold">Don't have an account? </Text>
             <Text className="text-primary-500 font-JakartaBold">Sign Up</Text>
           </Text>
           </Link>

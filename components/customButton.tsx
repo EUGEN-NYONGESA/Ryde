@@ -11,7 +11,7 @@ const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
         case "success":
             return "bg-green-500";
         case "outline":
-            return "bg-transparent border border-neutral-300";
+            return "bg-transparent border border-gray-400";
         default:
             return "bg-[#0286FF]";
     }
@@ -37,9 +37,13 @@ const CustomButton = ({
 
     return (
         <TouchableOpacity
+            style={{
+                borderWidth: bgVariant === "outline" ? 1 : 0,
+                borderColor: bgVariant === "outline" ? "#9CA3AF" : "transparent", // Gray-400 equivalent
+            }}
             onPress={onPress}
-            className={`w-full rounded-full p-3 flex-row justify-center items-center
-            py-4 shadow-md shadow-neutral-400/70 ${bgClass} ${className}`}
+            className={`w-full h-[45px] rounded-full p-3 flex-row justify-center items-center
+                py-4 shadow-md shadow-neutral-400/70 ${bgClass} ${className}`}
             activeOpacity={0.8}
             {...props}
         >
