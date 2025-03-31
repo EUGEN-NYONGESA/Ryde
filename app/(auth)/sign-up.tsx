@@ -13,8 +13,6 @@ const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp()
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [form, setForm] = useState({
   name: "",

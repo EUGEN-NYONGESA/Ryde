@@ -1,12 +1,24 @@
 ﻿import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Layout = () => {
     return (
-        <Stack>
-            <Stack.Screen name='welcome' options={{ headerShown: false }} />
-            <Stack.Screen name='sign-up' options={{ headerShown: false }} />
-            <Stack.Screen name='sign-in' options={{ headerShown: false }} />
-        </Stack>
+        <SafeAreaProvider>
+            <StatusBar style="auto" translucent backgroundColor="transparent" />
+            <Stack
+                screenOptions={{
+                contentStyle: {
+                backgroundColor: '#ffffff',
+                flex: 1
+                }
+                }}
+            >
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }} />
+                    </Stack>
+            </SafeAreaProvider>
     );
 };
 
